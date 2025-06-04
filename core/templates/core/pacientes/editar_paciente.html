@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center bg-warning text-dark">
+            <h5 class="m-0 font-weight-bold">
+                <i class="fas fa-edit me-2"></i>Editar Datos de Contacto
+            </h5>
+            <a href="{% url 'lista_pacientes' %}" class="btn btn-light btn-sm">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <!-- Datos del Paciente (No editables) -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h6 class="m-0">Datos del Paciente</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Nombre:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</p>
+                                <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Género:</strong> {{ paciente.get_genero_display }}</p>
+                                <p><strong>Diagnóstico:</strong> {{ paciente.diagnostico }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos de Contacto (Editables) -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h6 class="m-0">Datos de Contacto</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control" id="telefono" name="telefono" 
+                                           value="{{ paciente.telefono }}" required>
+                                    <label for="telefono">Teléfono *</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="correo" name="correo" 
+                                           value="{{ paciente.correo }}" required>
+                                    <label for="correo">Correo Electrónico *</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                    </button>
+                    <a href="{% url 'lista_pacientes' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

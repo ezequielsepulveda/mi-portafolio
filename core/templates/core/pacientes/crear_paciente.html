@@ -1,0 +1,273 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+            <h5 class="m-0 font-weight-bold">Registrar Nuevo Paciente</h5>
+            <a href="{% url 'lista_pacientes' %}" class="btn btn-light btn-sm">
+                Volver
+            </a>
+        </div>
+
+        <div class="card-body bg-light">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Datos Personales -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h6 class="m-0">
+                            <i class="fas fa-user mr-2"></i>Datos Personales
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- RUT -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="rut">RUT *</label>
+                                    {{ form.rut }}
+                                    <div class="invalid-feedback">
+                                        {{ form.rut.errors }}
+                                    </div>
+                                    <small class="form-text text-muted">Formato: 12345678-9</small>
+                                </div>
+                            </div>
+                            <!-- Nombre y Apellido -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre *</label>
+                                    {{ form.nombre }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="apellido">Apellido *</label>
+                                    {{ form.apellido }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                                    {{ form.fecha_nacimiento }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="genero">Género *</label>
+                                    {{ form.genero }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos de Contacto -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h6 class="m-0">
+                            <i class="fas fa-address-card mr-2"></i>Datos de Contacto
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono *</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">+56</span>
+                                        </div>
+                                        {{ form.telefono }}
+                                    </div>
+                                    <small class="form-text text-muted">Ingrese 9 dígitos comenzando con 9</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="correo">Correo Electrónico *</label>
+                                    {{ form.correo }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="direccion">Dirección</label>
+                                    {{ form.direccion }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información Médica -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h6 class="m-0">
+                            <i class="fas fa-notes-medical mr-2"></i>Información Médica
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="diagnostico">Diagnóstico *</label>
+                                    {{ form.diagnostico }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="motivo_consulta">Motivo de Consulta *</label>
+                                    {{ form.motivo_consulta }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fas fa-save mr-2"></i>Guardar Paciente
+                    </button>
+                    <a href="{% url 'lista_pacientes' %}" class="btn btn-secondary px-4">
+                        <i class="fas fa-times mr-2"></i>Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.form-floating > label {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78,115,223,0.25);
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+}
+
+.form-floating > textarea.form-control {
+    height: 100px;
+}
+
+.btn {
+    font-weight: 500;
+}
+</style>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Validación del formulario
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+
+    // Validación de fecha de nacimiento
+    const fechaNacimiento = document.getElementById('fecha_nacimiento');
+    fechaNacimiento.addEventListener('change', function() {
+        const fecha = new Date(this.value);
+        const hoy = new Date();
+        if (fecha > hoy) {
+            this.setCustomValidity('La fecha de nacimiento no puede ser futura');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Validación de teléfono
+    const telefono = document.getElementById('telefono');
+    telefono.addEventListener('input', function() {
+        const regex = /^\+?[0-9]{9,15}$/;
+        if (!regex.test(this.value)) {
+            this.setCustomValidity('Ingrese un número de teléfono válido');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Validación de correo
+    const correo = document.getElementById('correo');
+    correo.addEventListener('input', function() {
+        if (!this.validity.valid) {
+            this.setCustomValidity('Ingrese un correo electrónico válido');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+    // Validación RUT chileno
+    function validarRut(rut) {
+        rut = rut.replace(/[.-]/g, '');
+        var dv = rut.slice(-1).toUpperCase();
+        var rutNumero = parseInt(rut.slice(0, -1));
+        var suma = 0;
+        var multiplicador = 2;
+        
+        while (rutNumero > 0) {
+            suma += (rutNumero % 10) * multiplicador;
+            rutNumero = Math.floor(rutNumero / 10);
+            multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+        }
+        
+        var dvEsperado = 11 - (suma % 11);
+        dvEsperado = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
+        
+        return dv === dvEsperado;
+    }
+
+    // Formateo de RUT
+    document.querySelector('input[name="rut"]').addEventListener('input', function(e) {
+        let rut = e.target.value.replace(/[.-]/g, '');
+        if (rut.length > 1) {
+            rut = rut.slice(0, -1) + '-' + rut.slice(-1);
+        }
+        e.target.value = rut;
+    });
+
+    // Formateo de teléfono
+    document.querySelector('input[name="telefono"]').addEventListener('input', function(e) {
+        let numero = e.target.value.replace(/\D/g, '');
+        if (numero && numero[0] !== '9') {
+            numero = '9' + numero;
+        }
+        numero = numero.substring(0, 9);
+        if (numero.length > 1) {
+            numero = numero.match(new RegExp('.{1,4}', 'g')).join(' ');
+        }
+        e.target.value = numero;
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}

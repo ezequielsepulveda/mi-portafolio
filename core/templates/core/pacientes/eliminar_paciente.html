@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Eliminar Paciente</h6>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                ¿Está seguro que desea eliminar al paciente {{ paciente.nombre }} {{ paciente.apellido }}?
+                <br>
+                <small>Esta acción no se puede deshacer.</small>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                    <a href="{% url 'lista_pacientes' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

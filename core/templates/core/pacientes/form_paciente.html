@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                {% if paciente %}
+                    Editar Paciente
+                {% else %}
+                    Nuevo Paciente
+                {% endif %}
+            </h6>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.nombre|crispy }}
+                        {{ form.apellido|crispy }}
+                        {{ form.fecha_nacimiento|crispy }}
+                        {{ form.genero|crispy }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.telefono|crispy }}
+                        {{ form.correo|crispy }}
+                        {{ form.direccion|crispy }}
+                        {{ form.diagnostico|crispy }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {{ form.motivo_consulta|crispy }}
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        {% if paciente %}
+                            Actualizar
+                        {% else %}
+                            Registrar
+                        {% endif %}
+                    </button>
+                    <a href="{% url 'lista_pacientes' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Validaciones adicionales del formulario
+    $(document).ready(function() {
+        $('form').on('submit', function(e) {
+            let fechaNacimiento = new Date($('#id_fecha_nacimiento').val());
+            let hoy = new Date();
+            
+            if (fechaNacimiento > hoy) {
+                e.preventDefault();
+                alert('La fecha de nacimiento no puede ser futura');
+                return false;
+            }
+        });
+    });
+</script>
+{% endblock %}

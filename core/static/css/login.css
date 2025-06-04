@@ -1,0 +1,88 @@
+.login-container {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('../img/medical-background.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 15px;
+    animation: slideIn 0.5s ease-out;
+}
+
+.card-header {
+    background: linear-gradient(45deg, #4e73df, #224abe);
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    padding: 1.5rem;
+}
+
+.header-title {
+    color: #ffffff; /* Color base */
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.2);
+}
+
+.login-logo {
+    width: 80px;
+    margin-bottom: 1rem;
+}
+
+/* Formulario */
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+}
+
+.form-control:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.login-btn {
+    background: #4e73df;
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: white;  /* Añade esta línea */
+}
+
+.login-btn:hover {
+    background: #224abe;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.25);
+    color: white;  
+}
+
+.auth-link {
+    color: #4e73df;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #224abe;
+    text-decoration: underline;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

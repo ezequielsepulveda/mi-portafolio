@@ -1,0 +1,196 @@
+/* core/static/css/sidebar.css */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #1b3a58;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #45729e;
+}
+
+#sidebar .sidebar-header h3 {
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+#sidebar .sidebar-header small {
+    color: #ffffff;
+
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li {
+    padding: 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 20px;
+    display: block;
+    color: #fffbfb;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+    background: #4e73df;
+    color: #fff;
+}
+
+#sidebar ul li.active > a {
+    background: #4e73df;
+    color: #fff;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* Botón para colapsar sidebar */
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: #5799db;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+#sidebarCollapse:hover {
+    background: #4e73df;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #fff;
+    transition: all 0.8s;
+    margin-top: 4px;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
+    }
+}
+
+/* Estilos para el botón de cerrar sesión */
+.logout-item {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#logout-form {
+    width: 100%;
+}
+
+.logout-button {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: #e74a3b;
+    color: #fff;
+}
+
+.logout-button i {
+    font-size: 1.1em;
+}
+
+/* Ajustar el sidebar para que el logout quede al final */
+#sidebar ul.components {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 100px); /* Ajusta según el tamaño de tu header */
+}
+
+/* Animación suave al hover */
+.logout-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.logout-button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+.logout-button:hover::after {
+    width: 100%;
+}
+
+.logout-button i,
+.logout-button span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Efecto de presionar */
+.logout-button:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .logout-item {
+        margin-top: 20px;
+    }
+    
+    .logout-button {
+        padding: 12px 15px;
+    }
+}

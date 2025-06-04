@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block auth_content %}
+<div class="login-container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-5">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <img src="{% static 'img/cita.png' %}" alt="Logo" class="login-logo">
+                    <h2 class="header-title mb-0">Iniciar Sesión</h2>
+                    <p class="text-light mb-0">Sistema de Gestión Médica</p>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user me-2"></i>Usuario
+                            </label>
+                            {{ form.username|as_crispy_field }}
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock me-2"></i>Contraseña
+                            </label>
+                            {{ form.password|as_crispy_field }}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn login-btn" type="submit">
+                                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                            </button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4">
+                        <p class="mb-0">
+                            <small>
+                                ¿No tienes una cuenta? 
+                                <a href="{% url 'register' %}" class="auth-link">
+                                    Regístrate aquí
+                                </a>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

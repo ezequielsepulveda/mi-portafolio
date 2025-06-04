@@ -1,0 +1,119 @@
+/* core/static/css/dashboard.css */
+
+.container-fluid {
+    padding: 1.5rem;
+}
+
+/* Stats Cards */
+.stat-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    height: 100%;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-citas-hoy {
+    background-color: #b43617;
+}
+
+.card-en-espera {
+    background-color: #FFC107;
+}
+
+.card-atendidos {
+    background-color: #2BC155;
+}
+
+.card-total-pacientes {
+    background-color: #36B9CC;
+}
+
+.card-header {
+    color: white;  /* Esto cambiará el texto a color blanco */
+}
+.stat-title {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Upcoming List Styles */
+.upcoming-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 1rem;
+}
+
+.upcoming-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s ease;
+}
+
+.upcoming-item:hover {
+    background-color: #f8f9fa;
+}
+
+.upcoming-item:last-child {
+    border-bottom: none;
+}
+
+.time {
+    font-weight: 600;
+    color: #4361EE;
+}
+
+.priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+ 
+}
+
+
+/* Scrollbar Styles */
+.upcoming-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.upcoming-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.upcoming-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.upcoming-list::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .container-fluid {
+        padding: 1rem;
+    }
+
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+
+    .citas-chart-container {
+        height: 250px;
+    }
+}

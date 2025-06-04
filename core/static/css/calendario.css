@@ -1,0 +1,159 @@
+/* Estilos para el calendario */
+.fc-event {
+    cursor: pointer;
+}
+
+.fc-event-title {
+    font-weight: 500;
+}
+
+/* Estilos para los eventos según prioridad */
+.prioridad-alta {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.prioridad-media {
+    background-color: #ffc107 !important;
+    color: black;
+}
+
+.prioridad-baja {
+    background-color: #198754 !important;
+    color: white;
+}
+
+/* Estilos para eventos según estado */
+.evento-pendiente {
+    background-color: #4e73df !important;
+    border-color: #4e73df !important;
+}
+
+.evento-completado {
+    background-color: #1cc88a !important;
+    border-color: #1cc88a !important;
+}
+
+.evento-reprogramado {
+    background-color: #f6c23e !important;
+    border-color: #f6c23e !important;
+}
+
+.evento-noasistio {
+    background-color: #e74a3b !important;
+    border-color: #e74a3b !important;
+}
+
+/* Estilos para el modal */
+.modal-header {
+    background-color: #4e73df;
+    color: white;
+}
+
+.info-paciente {
+    background-color: #f8f9fc;
+    border-radius: 5px;
+}
+
+/* Estilos para las barras de calendario */
+.fc-toolbar-title {
+    font-size: 1.5em !important;
+    color: #4e73df;
+}
+
+.fc-button-primary {
+    background-color: #4e73df !important;
+    border-color: #4e73df !important;
+}
+
+.fc-button-primary:hover {
+    background-color: #2e59d9 !important;
+    border-color: #2e59d9 !important;
+}
+
+.fc-timegrid-slot {
+    height: 40px !important;
+}
+
+/* Estilos para los botones de acción */
+.btn-completada {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}
+
+.btn-reprogramar {
+    background-color: #f6c23e;
+    border-color: #f6c23e;
+}
+
+.btn-noasistio {
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+/* Estilos para las notificaciones */
+.alert {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fc-event {
+    border: none;
+    padding: 2px 4px;
+    margin: 1px 0;
+}
+
+.fc-event-title {
+    font-weight: 500;
+    padding: 2px;
+}
+
+.fc-event-time {
+    font-weight: bold;
+}
+
+/* Estilos para diferentes estados */
+.fc-event.completada {
+    background-color: #1cc88a !important;
+}
+
+.fc-event.pendiente {
+    background-color: #4e73df !important;
+}
+
+.fc-event.reprogramada {
+    background-color: #f6c23e !important;
+}
+
+.fc-event.no-asistio {
+    background-color: #e74a3b !important;
+}
+
+/* Mejorar la visibilidad de la hora actual */
+.fc-timegrid-now-indicator-line {
+    border-color: #e74a3b;
+    border-width: 2px;
+}
+
+/* Mejorar el aspecto de las celdas de tiempo */
+.fc-timegrid-slot {
+    height: 40px !important;
+}
+
+/* Estilo para el contenedor del calendario */
+#calendar {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

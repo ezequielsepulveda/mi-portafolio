@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detalles_citas.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Detalles de la Cita</h6>
+            <a href="{% url 'lista_citas' %}" class="btn btn-light btn-sm">Volver</a>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <!-- Información de la Cita -->
+                <div class="col-md-6">
+                    <h5 class="mb-3">Información de la Cita</h5>
+                    <hr>
+                    <p><strong>Fecha y Hora:</strong> {{ cita.fecha_hora|date:"d/m/Y H:i" }}</p>
+                    <p>
+                        <strong>Estado:</strong> 
+                        <span class="badge {% if cita.estado == 'P' %}bg-primary
+                                         {% elif cita.estado == 'C' %}bg-success
+                                         {% elif cita.estado == 'R' %}bg-warning
+                                         {% else %}bg-danger{% endif %}">
+                            {{ cita.get_estado_display }}
+                        </span>
+                    </p>
+                    <p><strong>Notas:</strong> {{ cita.notas|default:"Sin notas"|linebreaks }}</p>
+                </div>
+
+                <!-- Información del Paciente -->
+                <div class="col-md-6">
+                    <h5 class="mb-3">Información del Paciente</h5>
+                    <hr>
+                    <p><strong>Nombre:</strong> {{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</p>
+                    <p><strong>Teléfono:</strong> {{ cita.paciente.telefono }}</p>
+                    <p><strong>Correo:</strong> {{ cita.paciente.correo }}</p>
+                    <p><strong>Diagnóstico:</strong> {{ cita.paciente.diagnostico|default:"No especificado" }}</p>
+                    <p>
+                        <strong>Prioridad:</strong><br>
+                        <div class="progress mt-2">
+                            <div class="progress-bar {% if cita.paciente.prioridad >= 0.8 %}bg-danger
+                                                    {% elif cita.paciente.prioridad >= 0.5 %}bg-warning
+                                                    {% else %}bg-success{% endif %}"
+                                 role="progressbar" 
+                                 style="width: {% widthratio cita.paciente.prioridad 1 100 %}%"
+                                 aria-valuenow="{% widthratio cita.paciente.prioridad 1 100 %}"
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                {% widthratio cita.paciente.prioridad 1 100 %}%
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            {% if cita.paciente.prioridad >= 0.8 %}Prioridad Alta
+                            {% elif cita.paciente.prioridad >= 0.5 %}Prioridad Media
+                            {% else %}Prioridad Baja{% endif %}
+                        </small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    {% if cita.estado == 'P' or cita.estado == 'R' %}
+                        <button type="button" class="btn btn-success" onclick="cambiarEstadoCita('C')">
+                            <i class="fas fa-check"></i> Marcar como Completada
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="cambiarEstadoCita('N')">
+                            <i class="fas fa-times"></i> Marcar como No Asistió
+                        </button>
+                    {% endif %}
+                    
+                    {% if cita.estado == 'P' %}
+                    <a href="{% url 'editar_cita' cita.id %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Editar Cita
+                    </a>
+                    {% endif %}
+                    
+                    {% if cita.estado == 'N' %}
+                        <a href="{% url 'notificar_paciente' cita.id %}" class="btn btn-primary">
+                            <i class="fas fa-bell"></i> Notificar Paciente
+                        </a>
+                    {% endif %}
+                    
+                    <a href="{% url 'eliminar_cita' cita.id %}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Eliminar Cita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% csrf_token %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function cambiarEstadoCita(estado) {
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const citaId = {{ cita.id }};
+        
+        fetch(`/citas/${citaId}/cambiar-estado/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': csrftoken
+            },
+            body: `estado=${estado}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert('Error al actualizar el estado de la cita: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al actualizar el estado de la cita');
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block auth_content %}
+<div class="d-flex align-items-center min-vh-100"> <!-- Añadido para centrar verticalmente -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header text-center bg-primary text-white py-2">
+                        <h5 class="mb-0">Registro de Médico</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" class="row g-2">
+                            {% csrf_token %}
+                            
+                            <div class="col-md-6">
+                                {{ form.username|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.email|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{ form.first_name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.last_name|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{ form.especialidad|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.telefono|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{ form.password1|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.password2|as_crispy_field }}
+                            </div>
+                            
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn-register">
+                                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                                </button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <small class="text-muted">
+                                    ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Reducir el espacio entre campos */
+.form-group {
+    margin-bottom: 0.5rem !important;
+}
+
+/* Hacer los campos más pequeños */
+.form-control-sm {
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Reducir el tamaño del texto de ayuda */
+.help-text, .form-text {
+    font-size: 0.75rem !important;
+    margin-top: 0.1rem !important;
+}
+
+/* Ajustar el label */
+label {
+    font-size: 0.875rem;
+    margin-bottom: 0.1rem;
+}
+
+/* Hacer la tarjeta más compacta */
+.card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card-header {
+    padding: 0.5rem !important;
+}
+
+.card-body {
+    padding: 1rem !important;
+}
+
+/* Eliminar margen superior del contenedor */
+.container {
+    margin-top: 0 !important;
+}
+
+/* Asegurar que el formulario ocupa toda la altura disponible */
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+
+/* Fondo con degradado */
+.d-flex {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('{% static "img/medical-background.jpg" %}') no-repeat center center;
+    background-size: cover;
+}
+
+.btn-register {
+    width: auto; /* Cambiado de 100% a auto */
+    min-width: 200px; /* Añadido ancho mínimo */
+    padding: 10px 30px; /* Ajustado el padding */
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #4e73df, #224abe);
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin: 0 auto; /* Añadido margin auto */
+}
+.btn-register:hover {
+    background: linear-gradient(45deg, #224abe, #1a378b);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
+}
+
+.asteriskField {
+    display: none;
+}
+
+
+</style>
+{% block extra_js %}
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const telefonoInput = document.querySelector('input[name="telefono"]');
+    if (telefonoInput) {
+        telefonoInput.addEventListener('input', function(e) {
+            // Remover cualquier caracter que no sea número
+            let numero = e.target.value.replace(/\D/g, '');
+            
+            // Forzar que comience con 9
+            if (numero && numero[0] !== '9') {
+                numero = '9' + numero.slice(-8);
+            }
+            
+            // Limitar a 9 dígitos
+            numero = numero.substring(0, 9);
+            
+            // Formatear número (9 XXXX XXXX)
+            if (numero.length > 0) {
+                if (numero.length <= 5) {
+                    numero = numero.slice(0, 5);
+                } else {
+                    numero = numero.slice(0, 5) + ' ' + numero.slice(5);
+                }
+            }
+            
+            // Actualizar valor
+            e.target.value = numero;
+        });
+
+        // Validar antes de enviar el formulario
+        telefonoInput.form.addEventListener('submit', function(e) {
+            const numero = telefonoInput.value.replace(/\D/g, '');
+            if (numero.length !== 9 || !numero.startsWith('9')) {
+                e.preventDefault();
+                telefonoInput.setCustomValidity('El número debe comenzar con 9 y tener 9 dígitos');
+                telefonoInput.reportValidity();
+            } else {
+                telefonoInput.setCustomValidity('');
+            }
+        });
+    }
+});
+
+</script>
+{% endblock %}
+{% endblock %}

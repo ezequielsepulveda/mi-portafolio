@@ -1,0 +1,147 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container-fluid" id="printable-area">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2>Historia Clínica</h2>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Datos del Paciente</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Nombre:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</p>
+                    <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+                    <p><strong>Edad:</strong> {{ paciente.calcular_edad }} años</p>
+                    <p><strong>Género:</strong> {{ paciente.get_genero_display }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+                    <p><strong>Correo:</strong> {{ paciente.correo }}</p>
+                    <p><strong>Dirección:</strong> {{ paciente.direccion }}</p>
+                    <p><strong>Diagnóstico:</strong> {{ paciente.diagnostico }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Historial de Citas</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Doctor</th>
+                        <th>Estado</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cita in citas %}
+                    <tr>
+                        <td>{{ cita.fecha_hora|date:"d/m/Y H:i" }}</td>
+                        <td>{{ cita.doctor }}</td>
+                        <td>{{ cita.get_estado_display }}</td>
+                        <td>{{ cita.notas|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No hay citas registradas</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Historial Médico</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Doctor</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in historial %}
+                    <tr>
+                        <td>{{ evento.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ evento.doctor }}</td>
+                        <td>{{ evento.descripcion }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No hay registros en el historial</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <button onclick="window.print();" class="btn btn-primary no-print">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+            <a href="{% url 'lista_pacientes' %}" class="btn btn-secondary no-print">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container-fluid {
+            width: 100%;
+            margin: 0;
+            padding: 15px;
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa !important;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table {
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+    }
+</style>
+{% endblock %}

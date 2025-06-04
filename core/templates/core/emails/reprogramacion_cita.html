@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .header {
+            background-color: #4e73df;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .content {
+            background-color: #fff;
+            padding: 10px;
+        }
+        .saludo {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .cita-info {
+            margin: 10px 0;
+        }
+        .cita-info h3 {
+            color: #4e73df;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .cita-info p {
+            font-size: 12px;
+            margin: 5px 0;
+        }
+        .importante {
+            background-color: #fff3cd;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .importante h4 {
+            color: #856404;
+            margin: 0 0 6px 0;
+            font-size: 13px;
+        }
+        .importante ul {
+            margin: 0;
+            padding-left: 15px;
+            list-style-type: disc;
+        }
+        .importante li {
+            margin: 4px 0;
+            font-size: 12px;
+            color: #856404;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+            font-size: 11px;
+        }
+        .icon {
+            margin-right: 4px;
+            color: #4e73df;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>¡BIEVENIDO! Hora Reprogramada</h2>
+    </div>
+    
+    <div class="content">
+        <div class="saludo">
+            <p>Estimado/a {{ paciente.nombre }} {{ paciente.apellido }},</p>
+            <p>Le damos la bienvenida a nuestro sistema de atención.</p>
+        </div>
+        
+        <div class="cita-info">
+            <h3>Su Primera Cita:</h3>
+            <p>📅 <strong>Fecha:</strong> {{ fecha }}</p>
+            <p>🕒 <strong>Hora:</strong> {{ hora }}</p>
+            <p>👨‍⚕️ <strong>Doctor:</strong> Dr. {{ doctor.user.get_full_name }}</p>
+        </div>
+        
+        <div class="importante">
+            <h4>Información Importante:</h4>
+            <ul>
+                <li>Por favor, llegue 15 minutos antes de su hora programada</li>
+                <li>Traiga su identificación</li>
+                <li>Si tiene exámenes previos, tráigalos consigo</li>
+                <li>En caso de no poder asistir, favor notificar con anticipación</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>Este es un correo automático, por favor no responder</p>
+            <p><strong>GESMEDIC</strong></p>
+        </div>
+    </div>
+</body>
+</html>

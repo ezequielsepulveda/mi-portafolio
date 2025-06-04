@@ -1,0 +1,117 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/calendario.css' %}">
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <!-- Botones de navegación -->
+    <div class="btn-group mb-4">
+        <a href="{% url 'lista_citas' %}" class="btn btn-primary">
+            <i class="fas fa-list"></i> Vista Lista
+        </a>
+        <a href="{% url 'calendario_citas' %}" class="btn btn-primary active">
+            <i class="fas fa-calendar-alt"></i> Vista Calendario
+        </a>
+        <a href="{% url 'crear_cita' %}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Nueva Cita
+        </a>
+    </div>
+
+    <!-- Calendario -->
+    <div class="card shadow">
+        <div class="card-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Detalles -->
+<div class="modal fade" id="citaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Cita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">Información del Paciente</h6>
+                        <p><strong>Nombre:</strong> <span id="paciente-nombre"></span></p>
+                        <p><strong>Diagnóstico:</strong> <span id="paciente-diagnostico"></span></p>
+                        <p><strong>Prioridad:</strong> <span id="paciente-prioridad" class="priority-badge"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="mb-3">Detalles de la Cita</h6>
+                        <p><strong>Fecha:</strong> <span id="cita-fecha"></span></p>
+                        <p><strong>Hora:</strong> <span id="cita-hora"></span></p>
+                        <p><strong>Estado:</strong> <span id="cita-estado" class="badge"></span></p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="mb-3">Acciones</h6>
+                        <div id="cita-acciones" class="btn-group">
+                            <!-- Los botones se agregarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        initialDate: '2024-11-30', // Establecemos específicamente el 30 de noviembre
+        locale: 'es',
+        timeZone: 'UTC',
+        firstDay: 1, // 1 significa que la semana comienza en lunes
+        buttonText: {
+            today: 'Hoy',
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día'
+        },
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        slotMinTime: '09:00:00',
+        slotMaxTime: '17:00:00',
+        allDaySlot: false,
+        weekends: true, // Cambiamos a true para mostrar sábado y domingo
+        hiddenDays: [0], // Solo ocultamos el domingo (0 = domingo)
+        events: {{ eventos|safe }},
+        views: {
+            timeGridWeek: {
+                showNonCurrentDates: true, // Muestra fechas de otros meses si caen en la semana
+                displayEventEnd: true
+            }
+        },
+        // Resto del código del eventClick permanece igual
+        eventClick: function(info) {
+            // ... (mantener el código existente del eventClick)
+        }
+    });
+    
+    calendar.render();
+    
+    // Verificación de la fecha actual del calendario
+    console.log('Fecha actual del calendario:', calendar.getDate());
+    console.log('Vista actual:', calendar.view.type);
+    console.log('Eventos cargados:', calendar.getEvents());
+});
+</script>
+{% endblock %}

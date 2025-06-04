@@ -1,0 +1,277 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <!-- Primera fila: Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card card-citas-hoy">
+                <div class="stat-title">Citas Hoy</div>
+                <div class="stat-number">{{ citas_hoy }}</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card card-en-espera">
+                <div class="stat-title">En Espera</div>
+                <div class="stat-number">{{ pacientes_espera }}</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card card-atendidos">
+                <div class="stat-title">Atendidos</div>
+                <div class="stat-number">{{ atendidos }}</div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card card-total-pacientes">
+                <div class="stat-title">Total Pacientes</div>
+                <div class="stat-number">{{ total_pacientes }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Segunda fila: Gráficos y Próximas Citas -->
+    <div class="row">
+        <!-- Gráfico de Pacientes -->
+        <div class="col-xl-8 col-lg-7 mb-4">
+            <div class="card shadow">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="text-white">Pacientes por Dia</h6>
+                    <button id="actualizarGrafico" class="btn btn-light btn-sm">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div style="height: 300px;">
+                        <canvas id="pacientesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Próximas Citas -->
+        <div class="col-xl-4 col-lg-5 mb-4">
+            <div class="card shadow h-100">
+                <!-- Encabezado con fecha actual -->
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h6 class="m-0">Próximas Citas</h6>
+                    <span class="badge bg-light text-primary">Hoy: {{ today|date:"d/m/Y" }}</span>
+                </div>
+                
+                <!-- Contenido de las citas organizadas por fecha -->
+                <div class="card-body">
+                    {% if proximas_citas %}
+                        <div class="citas-container">
+                            {% regroup proximas_citas by fecha_hora|date:"d/m/Y" as citas_por_fecha %}
+                            {% for fecha in citas_por_fecha %}
+                                <!-- Sección de fecha -->
+                                <div class="fecha-seccion mb-3">
+                                    <div class="fecha-header bg-light p-2 rounded">
+                                        <strong>{{ fecha.grouper }}</strong>
+                                        {% if fecha.grouper == today|date:"d/m/Y" %}
+                                            <span class="badge bg-primary ms-2">Hoy</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Listado de citas para esta fecha -->
+                                    <div class="citas-lista ps-3 mt-2">
+                                        {% for cita in fecha.list %}
+                                            <div class="cita-item py-2 border-bottom">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="hora fw-bold text-primary">{{ cita.fecha_hora|time:"H:i" }}</div>
+                                                    <div class="nombre">{{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-check text-muted mb-3" style="font-size: 2rem;"></i>
+                            <p class="text-muted mb-3">No hay citas programadas</p>
+                            <a href="{% url 'crear_cita' %}" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>Agendar Nueva Cita
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializamos el contexto del gráfico
+    const ctx = document.getElementById('pacientesChart').getContext('2d');
+    let pacientesChart = null;
+
+    // Función para crear o actualizar el gráfico
+    function actualizarGrafico(data) {
+        // Si el gráfico ya existe, lo destruimos para crear uno nuevo
+        if (pacientesChart) {
+            pacientesChart.destroy();
+        }
+
+        // Creamos el nuevo gráfico con los datos actualizados
+        pacientesChart = new Chart(ctx, {
+            type: 'bar',  // Usamos un gráfico de barras para mejor visualización
+            data: {
+                labels: data.fechas,
+                datasets: [{
+                    label: 'Pacientes Registrados',
+                    data: data.pacientes_registrados,
+                    backgroundColor: '#4e73df',
+                    borderColor: '#4e73df',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Imprimimos los datos para depuración
+        console.log('Datos actualizados:', data);
+    }
+
+    // Función para actualizar las estadísticas
+    function actualizarEstadisticas() {
+        fetch('/api/dashboard/stats/')
+            .then(response => response.json())
+            .then(data => {
+                // Actualizamos el gráfico con los nuevos datos
+                actualizarGrafico(data);
+                
+                // También actualizamos los contadores en el dashboard
+                document.querySelector('.card-citas-hoy .stat-number').textContent = data.citas_hoy;
+                document.querySelector('.card-en-espera .stat-number').textContent = data.pacientes_espera;
+                document.querySelector('.card-atendidos .stat-number').textContent = data.citas_completadas;
+            })
+            .catch(error => {
+                console.error('Error al actualizar estadísticas:', error);
+            });
+    }
+
+    // Configuramos la actualización inicial y periódica
+    actualizarEstadisticas();
+    setInterval(actualizarEstadisticas, 300000);  // Actualizar cada 5 minutos
+
+    // Configuramos el botón de actualización manual
+    document.getElementById('actualizarGrafico').addEventListener('click', actualizarEstadisticas);
+});
+</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.stat-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    height: 100%;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.card-citas-hoy { background-color: #3a0000; }
+.card-en-espera { background-color: #FFC107; }
+.card-atendidos { background-color: #2BC155; }
+.card-total-pacientes { background-color: #36B9CC; }
+
+.stat-title {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 12px;
+    border: none;
+}
+
+.card-header {
+    background-color: #4e73df;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 1rem 1.5rem;
+}
+
+.upcoming-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.upcoming-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.upcoming-item:last-child {
+    border-bottom: none;
+}
+
+.priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: white;
+}
+
+.priority-badge.high { background-color: #e74a3b; }
+.priority-badge.medium { background-color: #f6c23e; }
+.priority-badge.low { background-color: #1cc88a; }
+
+/*------*/
+.citas-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.fecha-seccion {
+    margin-bottom: 1rem;
+}
+
+.fecha-header {
+    color: #4e73df;
+    font-size: 0.9rem;
+}
+
+.cita-item {
+    transition: all 0.2s ease;
+}
+
+.cita-item:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+.hora {
+    font-size: 0.9rem;
+    min-width: 60px;
+}
+
+.nombre {
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}

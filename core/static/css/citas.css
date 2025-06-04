@@ -1,0 +1,33 @@
+/* core/static/css/citas.css */
+
+/* Estilo para el botón de filtro */
+.filter-btn {
+    background-color: #4e73df; /* Color base */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #020614; /* Color más oscuro para hover */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Si es un dropdown */
+.filter-dropdown .dropdown-toggle {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.filter-dropdown .dropdown-toggle:hover,
+.filter-dropdown .dropdown-toggle:focus {
+    background-color: #224abe;
+    color: white;
+}

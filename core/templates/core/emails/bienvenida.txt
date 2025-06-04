@@ -1,0 +1,23 @@
+Bienvenido al Sistema de Traumatología
+
+Estimado/a {{ paciente.nombre }} {{ paciente.apellido }},
+
+Le damos la bienvenida a nuestro sistema de atención.
+
+{% if cita %}
+Su primera cita ha sido programada para:
+Fecha: {{ cita.fecha_hora|date:"d/m/Y" }}
+Hora: {{ cita.fecha_hora|time:"H:i" }}
+Doctor: Dr. {{ cita.doctor.user.get_full_name }}
+
+Información Importante:
+- Por favor, llegue 15 minutos antes de su cita
+- Traiga su identificación
+- Si tiene exámenes previos, tráigalos consigo
+- En caso de no poder asistir, favor notificar con anticipación
+{% else %}
+Pronto nos comunicaremos con usted para agendar su primera cita.
+{% endif %}
+
+Atentamente,
+Departamento de Traumatología
