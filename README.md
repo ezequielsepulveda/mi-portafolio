@@ -3,7 +3,7 @@ Nuestro Proyecto de Titulo
 Lorem ipsum....
 
 ## Autor –
-**Ezequiel Sepulveda**
+**Ezequiel Sepulveda** -
 **Jonathan Henuanca**
 
 * [LinkedIn](www.linkedin.com/in/ezequiel-sepulveda-516a39238)
