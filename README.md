@@ -1,6 +1,5 @@
 ## Descripción 🧠
 Nuestro Proyecto de Titulo 
-Lorem ipsum....
 
 ## Autor –
 **Ezequiel Sepulveda** -
