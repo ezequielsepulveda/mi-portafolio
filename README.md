@@ -1,5 +1,5 @@
 ## Descripción 🧠
-Nuestro Proyecto de Fitnnes
+Nuestro Proyecto de Fitness
 ## Autor –
 **Ezequiel Sepulveda** -
 **Jonathan Henuanca**
