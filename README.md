@@ -6,7 +6,6 @@ Nuestro Proyecto de Titulo de pajeras
 **Jonathan Henuanca**
 
 * [LinkedIn](www.linkedin.com/in/mi-portafolio)
-* [Porfolio web](https://ezequielsepulveda.github.io/mi-portafolio/)
 
 ## Imagenes De Como es Nuestra Pagina 
 –![005dd9e6-f6d5-4eff-be47-6784dcd2ca54](https://github.com/user-attachments/assets/c44c5fcf-75bc-4059-8a26-f8f8840d4c73)
