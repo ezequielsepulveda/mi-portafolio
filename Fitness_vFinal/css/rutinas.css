@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 100px;
+}
+
+.video-container {
+    margin-right: 20px;
+    flex-shrink: 0;
+    animation: slide-in 1s ease-out;
+    animation-fill-mode: both;
+}
+
+.video-title {
+    font-size: 24px;
+    text-align: center;
+    color: white;
+
+    
+}
+
+video {
+    width: 680px;
+    height: 480px;
+    
+    
+}
+
+.instrucciones-container {
+    background-color: rgb(233, 229, 21);
+    padding: 20px;
+    border-radius: 40px;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 50px;
+    flex-grow: 8;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.instrucciones-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    animation: slide-in 1s ease-out;
+
+}
+
+.instrucciones-list {
+    padding-left: 20px;
+    animation: slide-in 1s ease-out;
+    animation-fill-mode: both;
+    color: rgba(0, 0, 0, 0.733);
+}
+.instrucciones-list li {
+    color: rgb(17, 3, 68);
+}
+
+
+
+@keyframes slide-in {
+    0% {
+    transform: translateY(100%);
+    }
+    100% {
+    transform: translateY(0);
+    }
+}

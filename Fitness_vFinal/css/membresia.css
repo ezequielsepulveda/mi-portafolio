@@ -1,0 +1,45 @@
+
+  
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    margin-top: 200px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .plan {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 250px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .plan:hover {
+    transform: scale(1.05);
+  }
+  
+  .plan h2 {
+    margin-top: 0;
+    color: rgb(214, 135, 33);
+  }
+  
+  .plan p {
+    margin-bottom: 10px;
+    color: azure;
+  }
+  
+  .plan .price {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .plan ul{
+    font-size: 14px;
+    color: aqua;
+  }
+  
