@@ -5,7 +5,7 @@ Nuestro Proyecto de Titulo de pajeras
 **Ezequiel Sepulveda** -
 **Jonathan Henuanca**
 
-* [LinkedIn](www.linkedin.com/in/ezequiel-sepulveda-516a39238)
+* [LinkedIn](www.linkedin.com/in/mi-portafolio)
 * [Porfolio web](https://ezequielsepulveda.github.io/mi-portafolio/)
 
 ## Imagenes De Como es Nuestra Pagina 
