@@ -5,6 +5,7 @@ Nuestro Proyecto de Fitness
 **Jonathan Henuanca**
 
 * [LinkedIn](www.linkedin.com/in/ezequiel-sepulveda-516a39238)
+* [Porfolio web](https://ezequielsepulveda.github.io/mi-portafolio/)
   ## Imagenes de mi pagina
   ![image](https://github.com/user-attachments/assets/c61adee1-2aae-4030-94d1-062ee171378b)
   ![image](https://github.com/user-attachments/assets/bd4b9e36-f44f-4029-b88b-83ced844a87f)
